@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Todo from "./Todo";
 
+
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [content, setContent] = useState("");
 
   useEffect(() => {
     async function getTodos() {
-      const res = await fetch("/api/todos");
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/todos`);
       const todos = await res.json();
 
       setTodos(todos);
@@ -18,7 +19,7 @@ export default function App() {
   const createNewTodo = async (e) => {
     e.preventDefault();
     if (content.length > 3) {
-      const res = await fetch("/api/todos", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/todos`, {
         method: "POST",
         body: JSON.stringify({ todo: content }),
         headers: {
